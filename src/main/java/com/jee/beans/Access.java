@@ -37,5 +37,9 @@ public Access(int id_user, int id_doc, String accesslvl) {
 public Access() {
 	
 }
+@Override
+public String toString() {
+	return "Access [id_user=" + id_user + ", id_doc=" + id_doc + ", accesslvl=" + accesslvl + "]";
+}
 
 }

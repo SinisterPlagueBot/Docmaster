@@ -17,7 +17,7 @@ public class AccessBusinessImpl implements AccessBusiness {
 
 
 	@Override
-	public Access getAccess(int userId, int docId) {
+	public Access getAccess(int docId, int userId) {
 		// TODO Auto-generated method stub
 		return accessdb.SelectAccess(docId, userId);
 	}

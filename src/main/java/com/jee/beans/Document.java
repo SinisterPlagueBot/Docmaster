@@ -55,5 +55,11 @@ public class Document {
 			FilePath = filePath;
 		}
 
+		@Override
+		public String toString() {
+			return "Document [id=" + id + ", titre=" + titre + ", description=" + description + ", FilePath=" + FilePath
+					+ "]";
+		}
+
 	
 }

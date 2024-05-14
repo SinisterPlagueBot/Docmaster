@@ -40,7 +40,7 @@ public class MainServlet extends HttpServlet {
 		int x = uri.lastIndexOf("/");
 		int y =uri.lastIndexOf(".do");
 		String actionKey = uri.substring(x+1, y);
-		System.out.println(actionKey);
+		
 		String result =actions.get(actionKey).execute(request, response);
 		request.getRequestDispatcher(result).forward(request, response);
 	}

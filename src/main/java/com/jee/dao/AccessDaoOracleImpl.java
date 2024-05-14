@@ -36,7 +36,7 @@ public class AccessDaoOracleImpl implements AccessDao {
 
 
 	public Access SelectAccess(int id_doc,int id_usr) {
-		String query ="select *  from ACCESS_ where id_user="+id_usr +"id_doc="+id_doc;
+		String query ="select *  from ACCESS_ where id_user="+id_usr +" and id_doc="+id_doc;
 		try {
 			Statement st =cnx.createStatement();
 			ResultSet rs = st.executeQuery(query);
@@ -86,7 +86,7 @@ public class AccessDaoOracleImpl implements AccessDao {
 
 	@Override
 	public List<Access> selectAllAccessbyDoc(int docId) {
-		String query ="select *  from  ACCESS_ where id_doc="+docId;
+		String query ="select *  from  ACCESS_ where ID_DOC="+docId;
 		try {
 			Statement st =cnx.createStatement();
 			ResultSet rs = st.executeQuery(query);
@@ -94,8 +94,8 @@ public class AccessDaoOracleImpl implements AccessDao {
 			while(rs.next()) {
 				Access d =  new Access();
 				
-				d.setId_user(rs.getInt(1));
-				d.setId_doc(rs.getInt(2));
+				d.setId_doc(rs.getInt(1));
+				d.setId_user(rs.getInt(2));
 				d.setAccesslvl(rs.getString(3));
 				ds.add(d);
 			}
@@ -132,8 +132,25 @@ public class AccessDaoOracleImpl implements AccessDao {
 
 
 	@Override
-	public List<Document> selectAllDocsbyUser(int docId) {
-		// TODO Auto-generated method stub
+	public List<Document> selectAllDocsbyUser(int userId) {
+		String query ="select d.id,d.titre,d.description ,d.filepath from  Access_ a INNER JOIN DOCUMENT d on a.id_doc=d.id where id_user="+userId;
+		try {
+			Statement st =cnx.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			List<Document> ds=new ArrayList<>();
+			while(rs.next()) {
+				Document d =  new Document();
+				
+				d.setId(rs.getInt(1));
+				d.setTitre(rs.getString(2));
+				d.setDescription(rs.getString(3));
+				d.setFilePath(rs.getString(4));
+				ds.add(d);
+			}
+			return ds;
+		} catch (Exception e) {
+
+		}
 		return null;
 	}
 

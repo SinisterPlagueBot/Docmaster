@@ -14,5 +14,5 @@ public interface AccessDao {
 	public void RemoveAccess(int id, int docId);
 	public List<Access> selectAllAccessbyDoc(int docId);
 	public List<User> selectAllUsersbyDoc(int docId);	
-	public List<Document> selectAllDocsbyUser(int docId);	
+	public List<Document> selectAllDocsbyUser(int userId);	
 }
