@@ -18,13 +18,16 @@ public class UserDaoImplOracle implements UserDao{
 	}
 
 	public void InsertUser(User u) {
-		String query ="insert into USER_(username,password)  values(? ,?  )";
+		String query ="insert into USER_ (username,password)  values (? ,?  )";
 		try {
 			PreparedStatement pst =cnx.prepareStatement(query);
 			
 			pst.setString(1, u.getUsername());
 			pst.setString(2, u.getPassword());
 			pst.executeUpdate();
+			System.out.println("Executed SQL query: " + pst.toString());
+			cnx.commit();
+			pst.close();
 		} catch (Exception e) {
 
 		}

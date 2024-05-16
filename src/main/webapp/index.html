@@ -2,9 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Title</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
- <p> hi</p>
+ <form method="post" action="storeFile.do" enctype="multipart/form-data">
+ 	<input type="file" name="uploadedFile" >
+ 	<input id="doc_owner_id" type="text" name="doc_owner_id" placeholder="doc_owner_id"  style="display:none"  >
+ 	<input type="text" name="doc_title" placeholder="doc_title" >
+ 	<input type="text" name="doc_desc" placeholder="doc_desc">
+ 	
+ 	<button>save	</button>
+ </form>
+ <script type="text/javascript">
+ $(document).ready(function(){
+
+	 var username = localStorage.getItem('username');
+	 $("#doc_owner_username").val(username);
+	 
+	 
+ })
+ 	</script>
 </body>
 </html>

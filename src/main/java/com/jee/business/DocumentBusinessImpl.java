@@ -52,4 +52,9 @@ public class DocumentBusinessImpl  implements DocumentBusiness{
 		
 	}
 
+	@Override
+	public Document getDocByTitle(String title) {
+		return docdb.SelectDocumentByTitle(title);
+	}
+
 }

@@ -4,6 +4,13 @@ public class User {
 	private int id;
 	private String username;
 	private String password;
+	public User(String usern, String pass) {
+		username=usern;
+		password=pass;
+	}
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}

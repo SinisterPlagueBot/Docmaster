@@ -7,6 +7,7 @@ import com.jee.beans.User;
 
 public interface DocumentBusiness {
 	public User getDocOwner(int docId);
+	public Document getDocByTitle(String title);
 	public List<User>getAllColaborators(int docId);
 	public void addDoc(Document newDoc);
 	public void updateDoc(Document newDoc);

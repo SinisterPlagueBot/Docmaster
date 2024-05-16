@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -29,8 +30,28 @@
   <tr>
     <td><%= userDocs.get(i).getTitre() %></td>
     <td><%= userDocsOwners.get(i).getUsername() %></td>
+    <td><%= userDocsPermissions.get(i).getAccesslvl() %></td>
   </tr>
   <% } %>
 </table>
+<script>
+$(document).ready(function(){
+    // Example ID
+    var id = localStorage.getItem('myId');
+    
+    // Send the ID to a Java servlet using AJAX
+    $.ajax({
+        url: 'userId', // URL of your Java servlet
+        type: 'POST',
+        data: { id: id },
+        success: function(response) {
+            console.log('ID sent to Java servlet successfully');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending ID to Java servlet: ' + error);
+        }
+    });
+});
+</script>
 </body>
 </html>

@@ -21,6 +21,13 @@ public class Document {
 			// TODO Auto-generated constructor stub
 		}
 
+		public Document( String titre, String description, String filePath) {
+			this.titre = titre;
+	        this.description = description;
+	        this.FilePath = filePath;
+	    }
+		
+
 		// Getters
 	    public int getId() {
 	        return id;

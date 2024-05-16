@@ -70,4 +70,8 @@ public class BusinessFacade {
 		public List<Document> getAllDocsByUser(int userId) {
 			return userbs.getAllDocsByUser(userId);
 		}
+		public Document getDocBytitle(String doc_title) {
+			// TODO Auto-generated method stub
+			return docbs.getDocByTitle(doc_title);
+		}
 }

@@ -21,7 +21,7 @@ public class AccessDaoOracleImpl implements AccessDao {
 
 
 	public void InsertAccess(Access a) {
-		String query ="insert into ACCESS_ values(? ,? ,? )";
+		String query ="insert into ACCESS_ values (? ,? ,? )";
 		try {
 			PreparedStatement pst =cnx.prepareStatement(query);
 			pst.setInt(1, a.getId_doc());
@@ -29,6 +29,8 @@ public class AccessDaoOracleImpl implements AccessDao {
 			pst.setString(3, a.getAccesslvl());
 			
 			pst.executeUpdate();
+			cnx.commit();
+			pst.close();
 		} catch (Exception e) {
 
 		}

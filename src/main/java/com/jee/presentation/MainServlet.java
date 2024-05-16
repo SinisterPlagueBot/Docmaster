@@ -2,6 +2,7 @@ package com.jee.presentation;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import com.jee.dao.DocumentDaoImplOracle;
 import com.jee.dao.OracleDataSource;
 import com.jee.dao.UserDaoImplOracle;
 
-
+@MultipartConfig
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,6 +33,7 @@ public class MainServlet extends HttpServlet {
 		actions = new HashMap<String, Action>();
 		actions.put("signin", new SigninAction(facade));
 		actions.put("signup", new SignupAction(facade));
+		actions.put("storeFile", new StoreDocumentAction(facade));
 	}
 
 	
@@ -42,6 +44,7 @@ public class MainServlet extends HttpServlet {
 		String actionKey = uri.substring(x+1, y);
 		
 		String result =actions.get(actionKey).execute(request, response);
+		System.out.println(result);
 		request.getRequestDispatcher(result).forward(request, response);
 	}
 
@@ -49,6 +52,7 @@ public class MainServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		System.out.println("ok");
 	}
 
 }

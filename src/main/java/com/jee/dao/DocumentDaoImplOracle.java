@@ -18,22 +18,43 @@ public class DocumentDaoImplOracle implements  DocumentDao{
 		}
 
 	public void InsertDocument(Document d) {
-		String query ="insert into Document values(? ,? ,? ,? )";
+		String query ="insert into DOCUMENT (titre,description,filepath) values (? ,? ,? )";
 		try {
 			PreparedStatement pst =cnx.prepareStatement(query);
-			pst.setInt(1, d.getId());
-			pst.setString(2, d.getTitre());
-			pst.setString(3, d.getDescription());
-			pst.setString(4, d.getFilePath());
+		
+			pst.setString(1, d.getTitre());
+			pst.setString(2, d.getDescription());
+			pst.setString(3, d.getFilePath());
+		
 			pst.executeUpdate();
+			cnx.commit();
+			pst.close();
 		} catch (Exception e) {
 
 		}
 	}
 
-	public Document SelectDocument(int id) {
+	public Document SelectDocumentById(int id) {
 
 		String query ="select *  from Document where id ="+id;
+		try {
+			Statement st =cnx.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			Document d=  new Document();
+			if(rs.next()) {
+				d.setId(rs.getInt(1));
+				d.setTitre(rs.getString(2));
+				d.setDescription(rs.getString(3));
+				d.setFilePath(rs.getString(3));
+			}
+			return d;
+		} catch (Exception e) {
+
+		}
+		return null;
+	}	public Document SelectDocumentByTitle(String title) {
+
+		String query ="select *  from DOCUMENT where titre='"+title+"'";
 		try {
 			Statement st =cnx.createStatement();
 			ResultSet rs = st.executeQuery(query);
