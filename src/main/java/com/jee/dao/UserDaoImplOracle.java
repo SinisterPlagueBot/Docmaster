@@ -65,7 +65,7 @@ public class UserDaoImplOracle implements UserDao{
 				usr.setUsername(rs.getString(2));
 				usr.setPassword(rs.getString(3));
 				usrs.add(usr);
-				System.out.println(usr);
+				
 			}
 			
 			return usrs;

@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.jee.presentation.NoSuchFileException;
 
 import jakarta.servlet.http.Part;
 
@@ -50,5 +55,18 @@ public class LocalDocsManager {
         }
         return null;
     }
+	public void deleteFile(String filePath) {
+		Path path = Paths.get(filePath);
+
+		try {
+            Files.delete(path);
+           
+        } catch (java.nio.file.NoSuchFileException e) {
+           
+        } catch (IOException e) {
+            
+        }
+}
+	
 	
 }

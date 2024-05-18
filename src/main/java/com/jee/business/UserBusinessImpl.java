@@ -20,6 +20,7 @@ public class UserBusinessImpl implements UserBusiness {
 	public User authenticateUser(String username, String password) {
 		for(User u: userdb.SelectAllUsers()) {
 			if( u.getUsername().equals(username) && u.getPassword().equals(password)) {
+				System.out.println("authenticated User :"+u);
 				return u;
 			}
 		};

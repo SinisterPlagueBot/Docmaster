@@ -13,6 +13,7 @@
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
        
+        <url-pattern>*.dostart</url-pattern>
         <url-pattern>*.dostep1</url-pattern>
         <url-pattern>*.dostep2</url-pattern>
     	 <url-pattern>*.do</url-pattern>
@@ -20,4 +21,7 @@
 <welcome-file-list><welcome-file>
 	signin.jsp
 </welcome-file></welcome-file-list>
+<session-config>
+    <session-timeout>60</session-timeout>
+</session-config>
 </web-app>

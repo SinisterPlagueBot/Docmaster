@@ -29,7 +29,7 @@ public class AccessBusinessImpl implements AccessBusiness {
 
 	@Override
 	public void removeAccess(int userId, int docId) {
-		accessdb.RemoveAccess(userId,docId);
+		accessdb.RemoveAccess(docId,userId);
 		
 	}
 

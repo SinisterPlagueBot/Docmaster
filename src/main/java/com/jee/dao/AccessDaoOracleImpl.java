@@ -3,6 +3,7 @@ package com.jee.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,26 @@ public class AccessDaoOracleImpl implements AccessDao {
 
 	
 	public void RemoveAccess(int doc_id,int user_id) {
-		
+		try {
+	        // Assuming you have a connection object named "connection"
+	        
+	        // SQL DELETE statement to remove access
+	        String sql = "DELETE FROM access_ WHERE id_doc = ? AND id_user = ?";
+	        
+	        // Prepare the statement
+	        PreparedStatement statement = cnx.prepareStatement(sql);
+	        
+	        // Set parameters
+	        statement.setInt(1, doc_id);
+	        statement.setInt(2, user_id);
+	        
+	        // Execute the statement
+	        statement.executeUpdate();
+	        cnx.commit();
+	        statement.close();
+	    }catch(SQLException e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 

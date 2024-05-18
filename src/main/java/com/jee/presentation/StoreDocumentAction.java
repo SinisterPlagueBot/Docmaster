@@ -86,6 +86,8 @@ public class StoreDocumentAction extends Action {
 	            }
 	        }
 	       docsdb.storeDocument(outputFile);
+	       String step = "start";
+	       request.setAttribute("step", step);
 	        super.HandleMainPageRoutine(user, request, response);
 	        // Delete the temporary directory and its contents
 	        docsdb.deleteDirectory(tempDir);
@@ -100,8 +102,26 @@ public class StoreDocumentAction extends Action {
 			HttpSession session = request.getSession();
 			session.setAttribute("doc_title",doc_title);
 			session.setAttribute("doc_desc",doc_desc);
-			return "docstep2.html";
 			
+			System.out.println("ste^2");
+			String username= (String) session.getAttribute("username");
+			System.out.println(username);
+			User user =facade.getUserbyUsername(username);
+			String step = "step2";
+		    request.setAttribute("step", step);
+			super.HandleMainPageRoutine(user, request, response);
+			return "views/home.jsp";
+			
+		}
+		else if (request.getRequestURI().contains("start")) {
+			HttpSession session = request.getSession();
+			String username= (String) session.getAttribute("username");
+			System.out.println(username);
+			User user =facade.getUserbyUsername(username);
+			String step = "step1";
+		    request.setAttribute("step", step);
+			super.HandleMainPageRoutine(user, request, response);
+			return "views/home.jsp";
 		}
 		return null;
 		

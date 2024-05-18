@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -26,7 +28,7 @@ public class MainServlet extends HttpServlet {
 	private DataSource ds;
 
 	public void init(ServletConfig config) throws ServletException {
-
+		
 		ds = new OracleDataSource();
 		facade = new BusinessFacade(new AccessDaoOracleImpl(ds), new UserDaoImplOracle(ds),
 				new DocumentDaoImplOracle(ds));
@@ -34,10 +36,13 @@ public class MainServlet extends HttpServlet {
 		actions.put("signin", new SigninAction(facade));
 		actions.put("signup", new SignupAction(facade));
 		actions.put("storeFile", new StoreDocumentAction(facade));
+		actions.put("deleteFile", new DeleteDocumentAction(facade));
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(60 * 60);
 		String uri = request.getRequestURI();
 		int x = uri.lastIndexOf("/");
 		int y = uri.lastIndexOf(".do");

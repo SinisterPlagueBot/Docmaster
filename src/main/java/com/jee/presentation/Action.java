@@ -20,7 +20,7 @@ public abstract class Action {
 		req.setAttribute("user",user);
 		//all documents where user is a part of
 		List<Document> userDocs =facade.getAllDocsByUser(user.getId());
-		
+		System.out.println(userDocs);
 		req.setAttribute("userDocs",userDocs );
 		List<User> userDocsOwners =new ArrayList<User>();
 		// users permission for every doc

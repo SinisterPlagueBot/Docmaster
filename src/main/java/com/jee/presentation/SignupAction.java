@@ -26,9 +26,14 @@ public class SignupAction extends Action{
 		String password =req.getParameter("password");
 		String resultPath ;
 		HttpSession session =req.getSession();
-		session.setAttribute("username", username);
+		
+		
 		if(password.equals(confirmed_password)) {
 			User user = new User(username,password);
+			facade.addUser(user);
+			user=facade.getUserbyUsername(username);
+			session.setAttribute("username", username);
+			System.out.println(user);
 			super.HandleMainPageRoutine(user, req, res);
 			resultPath="/views/home.jsp";
 		}

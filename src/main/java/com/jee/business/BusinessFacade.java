@@ -26,7 +26,7 @@ public class BusinessFacade {
 			return accessbs.getAccess(userId, docId);
 		}
 		public void removeAccess(int userId,int docId) {
-			accessbs.removeAccess(userId, docId);
+			accessbs.removeAccess(docId, userId);
 		}
 		public void addUserAccess(Access a) {
 			accessbs.addUserAccess(a);
