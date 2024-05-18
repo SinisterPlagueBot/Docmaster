@@ -27,7 +27,7 @@ public class AccessDaoOracleImpl implements AccessDao {
 			pst.setInt(1, a.getId_doc());
 			pst.setInt(2, a.getId_user());
 			pst.setString(3, a.getAccesslvl());
-			
+			System.out.println("access inserted");
 			pst.executeUpdate();
 			cnx.commit();
 			pst.close();

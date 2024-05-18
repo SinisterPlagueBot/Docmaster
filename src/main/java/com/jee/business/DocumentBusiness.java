@@ -12,5 +12,6 @@ public interface DocumentBusiness {
 	public void addDoc(Document newDoc);
 	public void updateDoc(Document newDoc);
 	public void removeDoc(int docId);
+	public Document getDocById(int int1);
 	
 }

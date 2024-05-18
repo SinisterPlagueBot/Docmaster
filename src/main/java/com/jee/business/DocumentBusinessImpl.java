@@ -57,4 +57,10 @@ public class DocumentBusinessImpl  implements DocumentBusiness{
 		return docdb.SelectDocumentByTitle(title);
 	}
 
+	@Override
+	public Document getDocById(int int1) {
+		// TODO Auto-generated method stub
+		return docdb.SelectDocumentById(int1);
+	}
+
 }

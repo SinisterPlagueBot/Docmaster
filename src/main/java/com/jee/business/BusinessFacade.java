@@ -74,4 +74,8 @@ public class BusinessFacade {
 			// TODO Auto-generated method stub
 			return docbs.getDocByTitle(doc_title);
 		}
+		public Document getDocById(int int1) {
+			// TODO Auto-generated method stub
+			return docbs.getDocById(int1);
+		}
 }

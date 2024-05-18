@@ -10,6 +10,7 @@ import com.jee.business.BusinessFacade;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class SignupAction extends Action{
 
@@ -24,7 +25,8 @@ public class SignupAction extends Action{
 		String confirmed_password =req.getParameter("confirmed_password");
 		String password =req.getParameter("password");
 		String resultPath ;
-		
+		HttpSession session =req.getSession();
+		session.setAttribute("username", username);
 		if(password.equals(confirmed_password)) {
 			User user = new User(username,password);
 			super.HandleMainPageRoutine(user, req, res);

@@ -45,7 +45,7 @@ public class DocumentDaoImplOracle implements  DocumentDao{
 				d.setId(rs.getInt(1));
 				d.setTitre(rs.getString(2));
 				d.setDescription(rs.getString(3));
-				d.setFilePath(rs.getString(3));
+				d.setFilePath(rs.getString(4));
 			}
 			return d;
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class DocumentDaoImplOracle implements  DocumentDao{
 				d.setId(rs.getInt(1));
 				d.setTitre(rs.getString(2));
 				d.setDescription(rs.getString(3));
-				d.setFilePath(rs.getString(3));
+				d.setFilePath(rs.getString(4));
 			}
 			return d;
 		} catch (Exception e) {
