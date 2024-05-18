@@ -99,48 +99,49 @@ tr:hover {
 }
 
 #add-div {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-top: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin-top: 20px;
+	background: #f9f9f9;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #add-div h4 {
-    color: #2c3e50;
-    margin-bottom: 15px;
+	color: #2c3e50;
+	margin-bottom: 15px;
 }
 
 #add-div form {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
-#add-div form input[type="text"],
-#add-div form input[type="file"] {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+#add-div form input[type="text"], #add-div form input[type="file"] {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 }
 
 #add-div form button {
-    align-self: flex-start;
-    padding: 10px 15px;
-    background-color: #2980b9;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+	align-self: flex-start;
+	padding: 10px 15px;
+	background-color: #2980b9;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 #add-div form button:hover {
-    background-color: #2575a7;
+	background-color: #2575a7;
 }
-#signout-btn{
-background-color:#2980b9;
-color:white;}
+
+#signout-btn {
+	background-color: #2980b9;
+	color: white;
+}
 </style>
 </head>
 <body>
@@ -161,41 +162,51 @@ color:white;}
 		<h3 class="title">
 			Hello,
 			<%=user.getUsername()%></h3>
-		
-		
-		<% 
-    String step = (String) request.getAttribute("step");
-    if (step == null) {
-        step = "initial";
-    }
-%>
-<div id="add-div">
-<h4 >add File process :</h4>
-    <% if (step.equals("step1")) { %>
-        <div id="step1">
-            <form method="post" action="storeFile.dostep1">
-                <input type="text" name="doc_title" placeholder="Document Title">
-                <input type="text" name="doc_desc" placeholder="Document Description">
-                <button>Next</button>
-            </form>
-        </div>
-    <% } else if (step.equals("step2")) { %>
-        <div id="step2">
-            <form method="post" action="storeFile.dostep2" enctype="multipart/form-data">
-                <input type="file" name="uploadedFile">
-                <button>Save</button>
-            </form>
-        </div>
-    <% } else { %>
-        <!-- Handle the case where step is "initial" -->
-        <div id="initial">
-            <form method="post" action="storeFile.dostart">
-                <input type="hidden" name="initiate" value="true">
-                <button>Start</button>
-            </form>
-        </div>
-    <% } %>
-</div>
+
+
+		<%
+		String step = (String) request.getAttribute("step");
+		if (step == null) {
+			step = "initial";
+		}
+		%>
+		<div id="add-div">
+			<h4>add File process :</h4>
+			<%
+			if (step.equals("step1")) {
+			%>
+			<div id="step1">
+				<form method="post" action="storeFile.dostep1">
+					<input type="text" name="doc_title" placeholder="Document Title">
+					<input type="text" name="doc_desc"
+						placeholder="Document Description">
+					<button>Next</button>
+				</form>
+			</div>
+			<%
+			} else if (step.equals("step2")) {
+			%>
+			<div id="step2">
+				<form method="post" action="storeFile.dostep2"
+					enctype="multipart/form-data">
+					<input type="file" name="uploadedFile">
+					<button>Save</button>
+				</form>
+			</div>
+			<%
+			} else {
+			%>
+			<!-- Handle the case where step is "initial" -->
+			<div id="initial">
+				<form method="post" action="storeFile.dostart">
+					<input type="hidden" name="initiate" value="true">
+					<button>Start</button>
+				</form>
+			</div>
+			<%
+			}
+			%>
+		</div>
 
 		<table>
 			<tr>
@@ -215,26 +226,33 @@ color:white;}
 						id="<%=userDocs.get(i).getId()%>">modifer</button>
 				<td><button class="delete-btn btn"
 						id="<%=userDocs.get(i).getId()%>">supprimer</button>
-				<td><button class="download-btn btn"
-						id="<%=userDocs.get(i).getId()%>">telecharger</button>
+				<td>
+					<%-- <a href="<%=userDocs.get(i).getFilePath()%>"> --%>
+					<button class="download-btn btn" id="<%=userDocs.get(i).getId()%>">telecharger</button>
+					<!-- </a> -->
 			</tr>
 			<%
 			}
 			%>
 
 		</table>
-		<a  href="signin.jsp"><button id="signout-btn" class="btn"> sign out</button></a>
-	
+		<a href="signin.jsp"><button id="signout-btn" class="btn">
+				sign out</button></a>
+
 	</div>
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$(".delete-btn").click(function(){
-								var doc_id=$(this).attr('id');
-								var url = 'deleteFile.do?doc_id=' + doc_id;
-						        window.location.href = url;
-						});});
+		$(document).ready(function() {
+			$(".delete-btn").click(function() {
+				var doc_id = $(this).attr('id');
+				var url = 'deleteFile.do?doc_id=' + doc_id;
+				window.location.href = url;
+			});
+			$(".download-btn").click(function(){
+				var doc_id = $(this).attr('id');
+				var url = 'downloadFile.do?doc_id=' + doc_id;
+				window.location.href = url;
+			})
+		});
 	</script>
 
 </body>

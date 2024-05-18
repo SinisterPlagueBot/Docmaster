@@ -8,6 +8,7 @@ import com.jee.business.LocalDocsManager;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class DownloadDocumentAction extends Action {
 
@@ -21,7 +22,8 @@ public class DownloadDocumentAction extends Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		String doc_id = request.getParameter("doc_id");
-		String username = request.getParameter("username");
+		HttpSession session =request.getSession();
+		String username = (String) session.getAttribute("username");
 
 		// Log parameters for debugging
 		System.out.println("Username: " + username);
@@ -32,8 +34,9 @@ public class DownloadDocumentAction extends Action {
 
 		Document doc = facade.getDocById(Integer.parseInt(doc_id));
 		File file = docsdb.getDocumentByFilePath(doc.getFilePath());
-
-		// Check if the file exists
+		String doc_filepath= doc.getFilePath();
+		request.setAttribute("doc_filepath", "");
+//		// Check if the file exists
 		if (file.exists()) {
 			System.out.println("File exists: " + file.getAbsolutePath());
 

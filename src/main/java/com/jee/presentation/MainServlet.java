@@ -36,6 +36,7 @@ public class MainServlet extends HttpServlet {
 		actions.put("signin", new SigninAction(facade));
 		actions.put("signup", new SignupAction(facade));
 		actions.put("storeFile", new StoreDocumentAction(facade));
+		actions.put("downloadFile", new DownloadDocumentAction(facade));
 		actions.put("deleteFile", new DeleteDocumentAction(facade));
 	}
 
