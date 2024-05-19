@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.jee.presentation.NoSuchFileException;
 
 import jakarta.servlet.http.Part;
 
@@ -86,5 +86,21 @@ public class LocalDocsManager {
 			return null;
 		}
 	}
+	public String updateFilenameAndGetFilePath(String currentFilePath, String newFileName) throws IOException {
+        File currentFile = new File(currentFilePath);
+        if (!currentFile.exists() || !currentFile.isFile()) {
+            throw new NoSuchFileException("File not found: " + currentFilePath);
+        }
+
+        String newFilePath = LocalStorageDir + File.separator + newFileName;
+        File newFile = new File(newFilePath);
+
+        if (currentFile.renameTo(newFile)) {
+            System.out.println("File renamed successfully to: " + newFilePath);
+            return newFilePath;
+        } else {
+            throw new IOException("Error renaming file to: " + newFilePath);
+        }
+    }
 
 }

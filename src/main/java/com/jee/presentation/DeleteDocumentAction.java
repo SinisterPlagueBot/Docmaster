@@ -1,7 +1,5 @@
 package com.jee.presentation;
 
-import java.io.File;
-
 import com.jee.beans.Access;
 import com.jee.beans.User;
 import com.jee.business.BusinessFacade;
@@ -12,11 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class DeleteDocumentAction extends Action {
-	LocalDocsManager localStorage = new LocalDocsManager("D:" + File.separator + "docmaster_docdb");
+	LocalDocsManager localStorage ;
 
-	public DeleteDocumentAction(BusinessFacade facade) {
+	public DeleteDocumentAction(BusinessFacade facade,LocalDocsManager localdb) {
 		super(facade);
-
+		localStorage =localdb;
 	}
 
 	@Override
@@ -35,7 +33,11 @@ public class DeleteDocumentAction extends Action {
 			if (access.getAccesslvl().equals("o")) {
 				// remove from disk
 				String filePath = facade.getDocById(doc_id_int).getFilePath();
+				//remove the access for owner and all other users
 				facade.removeAccess( doc_id_int,user.getId());
+				facade.removeAccessByDoc( doc_id_int);
+				//remove the doc from db
+				facade.removeDoc(doc_id_int);
 				localStorage.deleteFile(filePath);
 			}
 			// Rest of your code here

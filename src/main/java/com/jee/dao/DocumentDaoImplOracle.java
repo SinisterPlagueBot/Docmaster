@@ -98,8 +98,20 @@ public class DocumentDaoImplOracle implements  DocumentDao{
 
 	
 	public void UpdateDocument(Document d) {
-		
-	}
+        String query = "UPDATE DOCUMENT SET titre = ?, description = ?, filepath = ? WHERE id = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setString(1, d.getTitre());
+            pst.setString(2, d.getDescription());
+            pst.setString(3, d.getFilePath());
+            pst.setInt(4, d.getId());
+            pst.executeUpdate();
+            cnx.commit();
+            pst.close();
+        } catch (Exception e) {
+            // Handle exception (log it, rethrow it, or handle it appropriately)
+        }
+    }
 
 	public void RemoveDocument(int id) {
 		// TODO Auto-generated method stub

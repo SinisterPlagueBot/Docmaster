@@ -78,4 +78,8 @@ public class BusinessFacade {
 			// TODO Auto-generated method stub
 			return docbs.getDocById(int1);
 		}
+		public void removeAccessByDoc(int doc_id_int) {
+			// TODO Auto-generated method stub
+			accessbs.deleteAllAccessByDoc(doc_id_int);
+		}
 }

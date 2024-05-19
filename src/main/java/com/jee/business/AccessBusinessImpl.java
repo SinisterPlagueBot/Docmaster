@@ -38,5 +38,10 @@ public class AccessBusinessImpl implements AccessBusiness {
 		accessdb.InsertAccess(a);
 		
 	}
+	@Override
+	public void deleteAllAccessByDoc(int doc_id_int) {
+		accessdb.removeAccessbyDoc(doc_id_int);
+		
+	}
 
 }

@@ -20,9 +20,9 @@ import jakarta.servlet.http.Part;
 
 public class StoreDocumentAction extends Action {
 	 LocalDocsManager docsdb;
-	public StoreDocumentAction(BusinessFacade facade) {
+	public StoreDocumentAction(BusinessFacade facade,LocalDocsManager docsdb) {
 		super(facade);
-		docsdb=new LocalDocsManager("D:"+File.separator+"docmaster_docdb");
+		this.docsdb=docsdb;
 	      
 		// TODO Auto-generated constructor stub
 	}

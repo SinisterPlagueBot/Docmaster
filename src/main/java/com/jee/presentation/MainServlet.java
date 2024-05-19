@@ -9,10 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 import com.jee.business.BusinessFacade;
+import com.jee.business.LocalDocsManager;
 import com.jee.dao.AccessDaoOracleImpl;
 import com.jee.dao.DataSource;
 import com.jee.dao.DocumentDaoImplOracle;
@@ -26,24 +28,26 @@ public class MainServlet extends HttpServlet {
 	private HashMap<String, Action> actions;
 	private BusinessFacade facade;
 	private DataSource ds;
+	private LocalDocsManager localDocumentdb;
 
 	public void init(ServletConfig config) throws ServletException {
-		
+		localDocumentdb = new LocalDocsManager("D:" + File.separator + "docmaster_docdb");
 		ds = new OracleDataSource();
 		facade = new BusinessFacade(new AccessDaoOracleImpl(ds), new UserDaoImplOracle(ds),
 				new DocumentDaoImplOracle(ds));
 		actions = new HashMap<String, Action>();
 		actions.put("signin", new SigninAction(facade));
 		actions.put("signup", new SignupAction(facade));
-		actions.put("storeFile", new StoreDocumentAction(facade));
-		actions.put("downloadFile", new DownloadDocumentAction(facade));
-		actions.put("deleteFile", new DeleteDocumentAction(facade));
+		actions.put("storeFile", new StoreDocumentAction(facade, this.localDocumentdb));
+		actions.put("downloadFile", new DownloadDocumentAction(facade, this.localDocumentdb));
+		actions.put("deleteFile", new DeleteDocumentAction(facade, this.localDocumentdb));
+		actions.put("updateFile", new UpdateDocumentInfoAction(facade, this.localDocumentdb));
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(60 * 60);
+		session.setMaxInactiveInterval(60 * 60);
 		String uri = request.getRequestURI();
 		int x = uri.lastIndexOf("/");
 		int y = uri.lastIndexOf(".do");

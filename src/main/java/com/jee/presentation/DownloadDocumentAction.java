@@ -14,9 +14,9 @@ public class DownloadDocumentAction extends Action {
 
 	private LocalDocsManager docsdb;
 	private static final int DEFAULT_BUFFER_SIZE = 10240;
-	public DownloadDocumentAction(BusinessFacade facade) {
+	public DownloadDocumentAction(BusinessFacade facade,LocalDocsManager localdb) {
 		super(facade);
-		docsdb = new LocalDocsManager("D:" + File.separator + "docmaster_docdb");
+		docsdb = localdb;
 	}
 
 	@Override

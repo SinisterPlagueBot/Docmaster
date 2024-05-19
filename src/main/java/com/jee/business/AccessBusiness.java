@@ -8,4 +8,5 @@ public interface AccessBusiness {
 	public void removeAccess(int userId,int docId);
 	public void addUserAccess(Access a);
 	void updateAccess(Access a);
+	public void deleteAllAccessByDoc(int doc_id_int);
 }
