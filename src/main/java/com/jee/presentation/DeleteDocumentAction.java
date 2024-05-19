@@ -42,9 +42,9 @@ public class DeleteDocumentAction extends Action {
 			}
 			else {facade.removeAccess( doc_id_int,user.getId());}
 			
-			// Rest of your code here
+			
 		} else {
-			// Handle the case where "doc_id" is null
+			
 		}
 
 		

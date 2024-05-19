@@ -19,7 +19,7 @@
 			<input type="password" name="password" placeholder="Password"
 				required>
 			<button id="submit-btn"type="submit" style="display: block">Connexion</button>
-			<%-- Display error message if available --%>
+			
 
 			<a href="signup.jsp"> Pas de compte? Créez un nouveau compte</a>
 		</form>

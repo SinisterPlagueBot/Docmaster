@@ -109,7 +109,7 @@ public class DocumentDaoImplOracle implements  DocumentDao{
             cnx.commit();
             pst.close();
         } catch (Exception e) {
-            // Handle exception (log it, rethrow it, or handle it appropriately)
+            e.printStackTrace();
         }
     }
 

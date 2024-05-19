@@ -11,7 +11,7 @@ import java.util.List;
 import com.jee.beans.Access;
 import com.jee.beans.Document;
 import com.jee.beans.User;
-// TODO use the meteor !!!!!
+// TODO use the mediator !!!!!
 public class AccessDaoOracleImpl implements AccessDao {
 	Connection cnx;
 
