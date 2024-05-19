@@ -78,9 +78,19 @@ public class AccessDaoOracleImpl implements AccessDao {
 	}
 
 	public void UpdateAccess(Access a) {
-		
-	}
-
+        String query = "UPDATE ACCESS_ SET accesslvl = ? WHERE id_doc = ? AND id_user = ?";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setString(1, a.getAccesslvl());
+            pst.setInt(2, a.getId_doc());
+            pst.setInt(3, a.getId_user());
+            pst.executeUpdate();
+            cnx.commit();
+            pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public void RemoveAccess(int doc_id,int user_id) {
 		try {

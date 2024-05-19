@@ -42,6 +42,7 @@ public class MainServlet extends HttpServlet {
 		actions.put("downloadFile", new DownloadDocumentAction(facade, this.localDocumentdb));
 		actions.put("deleteFile", new DeleteDocumentAction(facade, this.localDocumentdb));
 		actions.put("updateFile", new UpdateDocumentInfoAction(facade, this.localDocumentdb));
+		actions.put("accessUpdate", new ManageAccessAction(facade));
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

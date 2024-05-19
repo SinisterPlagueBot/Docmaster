@@ -92,10 +92,12 @@ tr:hover {
 	background-color: #2ecc71;
 	color: white;
 }
-.access-btn{
-background-color: purple;
+
+.access-btn {
+	background-color: purple;
 	color: white;
 }
+
 .btn:hover {
 	opacity: 0.8;
 	box-shadow: 0px 0px 2px 2px black;
@@ -145,59 +147,94 @@ background-color: purple;
 	background-color: #2980b9;
 	color: white;
 }
+
 .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 8px;
-    }
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.modal form label {
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 500px;
+	border-radius: 8px;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+.modal form input[type="text"], .modal form select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal form button {
+    align-self: flex-start;
+    padding: 10px 15px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal form button:hover {
+    background-color: #2575a7;
+}
 </style>
 </head>
 <body>
-<div class="container">
-    <%
-    User user = (User) request.getAttribute("user");
-    List<Access> userDocsPermissions = (List<Access>) request.getAttribute("userDocsPermissions");
-    List<User> userDocsOwners = (List<User>) request.getAttribute("userDocsOwners");
-    List<Document> userDocs = (List<Document>) request.getAttribute("userDocs");
-    String step = (String) request.getAttribute("step");
-    if (step == null) {
-        step = "initial";
-    }
-    %>
-    <h1 class="info">My Documents Manager</h1>
-    <h3 class="title">Hello, <%=user.getUsername()%></h3>
+    <div class="container">
+        <%
+        User user = (User) request.getAttribute("user");
+        List<Access> userDocsPermissions = (List<Access>) request.getAttribute("userDocsPermissions");
+        List<User> userDocsOwners = (List<User>) request.getAttribute("userDocsOwners");
+        List<Document> userDocs = (List<Document>) request.getAttribute("userDocs");
+        String step = (String) request.getAttribute("step");
+        if (step == null) {
+            step = "initial";
+        }
+        %>
+        <h1 class="info">My Documents Manager</h1>
+        <h3 class="title">Hello, <%=user.getUsername()%></h3>
 
-    <div id="add-div">
-        <h4>add File process :</h4>
-        <% if (step.equals("step1")) { %>
+        <div id="add-div">
+            <h4>add File process :</h4>
+            <%
+            if (step.equals("step1")) {
+            %>
             <div id="step1">
                 <form method="post" action="storeFile.dostep1">
                     <input type="text" name="doc_title" placeholder="Document Title">
@@ -205,128 +242,168 @@ background-color: purple;
                     <button>Next</button>
                 </form>
             </div>
-        <% } else if (step.equals("step2")) { %>
+            <%
+            } else if (step.equals("step2")) {
+            %>
             <div id="step2">
                 <form method="post" action="storeFile.dostep2" enctype="multipart/form-data">
                     <input type="file" name="uploadedFile">
                     <button>Save</button>
                 </form>
             </div>
-        <% } else { %>
+            <%
+            } else {
+            %>
             <div id="initial">
                 <form method="post" action="storeFile.dostart">
                     <input type="hidden" name="initiate" value="true">
                     <button>Start</button>
                 </form>
             </div>
-        <% } %>
-    </div>
- <table>
-        <tr>
-            <th>Document Title</th>
-            <th>Document Owner</th>
-            <th>Permission</th>
-            <th colspan="4">Actions</th>
-        </tr>
-        <% for (int i = 0; i < userDocs.size(); i++) { %>
-        <tr>
-            <td><%= userDocs.get(i).getTitre() %></td>
-            <td><%= userDocsOwners.get(i).getUsername() %></td>
-            <td><%= userDocsPermissions.get(i).getAccesslvl() %></td>
-            <td><button class="update-btn btn"
-                        data-id="<%= userDocs.get(i).getId() %>"
-                        data-title="<%= userDocs.get(i).getTitre() %>"
-                        data-desc="<%= userDocs.get(i).getDescription() %>"
-                        data-permission="<%= userDocsPermissions.get(i).getAccesslvl() %>">update</button></td>
-            <td><button class="delete-btn btn" id="<%= userDocs.get(i).getId() %>">delete</button></td>
-            <td><button class="download-btn btn" id="<%= userDocs.get(i).getId() %>">download</button></td>
-       		<% if(userDocsPermissions.get(i).getAccesslvl().equals("o")) {%>
-       		<td><button class="access-btn btn"> manage access</button></td>
-       	<% } %>
-        </tr>
-        <% } %>
-    </table>
-    <a href="signin.jsp"><button id="signout-btn" class="btn">sign out</button></a>
-</div>
+            <%
+            }
+            %>
+        </div>
 
-<div id="updateModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Update Document</h2>
-        <form id="updateForm" method="post" action="updateFile.do">
-            <input type="hidden" name="doc_id" id="doc_id">
-            <label for="doc_title">Title:</label>
-            <input type="text" name="doc_title" id="doc_title">
-            <label for="doc_desc">Description:</label>
-            <input type="text" name="doc_desc" id="doc_desc">
+        <table>
+            <tr>
+                <th>Document Title</th>
+                <th>Document Owner</th>
+                <th>Permission</th>
+                <th colspan="4">Actions</th>
+            </tr>
+            <%
+            for (int i = 0; i < userDocs.size(); i++) {
+            %>
+            <tr>
+                <td><%=userDocs.get(i).getTitre()%></td>
+                <td><%=userDocsOwners.get(i).getUsername()%></td>
+                <td><%=userDocsPermissions.get(i).getAccesslvl()%></td>
+                <%
+                if (!userDocsPermissions.get(i).getAccesslvl().equals("r")) {
+                %>
+                <td><button class="update-btn btn" data-id="<%=userDocs.get(i).getId()%>" data-title="<%=userDocs.get(i).getTitre()%>" data-desc="<%=userDocs.get(i).getDescription()%>" data-permission="<%=userDocsPermissions.get(i).getAccesslvl()%>">update</button></td>
+                <%
+                }
+                %>
+                <td><button class="delete-btn btn" id="<%=userDocs.get(i).getId()%>">delete</button></td>
+                <td><button class="download-btn btn" id="<%=userDocs.get(i).getId()%>">download</button></td>
+                <%
+                if (userDocsPermissions.get(i).getAccesslvl().equals("o")) {
+                %>
+                <td><button class="access-btn btn" data-id="<%=userDocs.get(i).getId()%>">manage access</button></td>
+                <%
+                }
+                %>
+            </tr>
+            <%
+            }
+            %>
+        </table>
+        <a href="signin.jsp"><button id="signout-btn" class="btn">sign out</button></a>
+    </div>
+
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Update Document</h2>
+            <form id="updateForm" method="post" action="updateFile.do">
+                <input type="hidden" name="doc_id" id="doc_id">
+                <label for="doc_title">Title:</label>
+                <input type="text" name="doc_title" id="doc_title">
+                <label for="doc_desc">Description:</label>
+                <input type="text" name="doc_desc" id="doc_desc">
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="accessModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Manage Access</h2>
             
-            <button type="submit">Save Changes</button>
-        </form>
+            <form id="grantAccessForm" method="post" action="accessUpdate.dograntaccess">
+                <input type="hidden" name="doc_id" id="access_doc_id">
+                <label for="grant_username">Username:</label>
+                <input type="text" name="username" id="grant_username">
+                <label for="grant_accesslvl">Access Level:</label>
+                <select name="accesslvl" id="grant_accesslvl">
+                    <option value="r">Read</option>
+                    <option value="r+w">Read and Write</option>
+                </select>
+                <button type="submit">Grant Access</button>
+            </form>
+            
+            <form id="removeAccessForm" method="post" action="accessUpdate.doremoveaccess">
+                <input type="hidden" name="doc_id" id="remove_doc_id">
+                <label for="remove_username">Username:</label>
+                <input type="text" name="username" id="remove_username">
+                <button type="submit">Remove Access</button>
+            </form>
+            
+            <form id="updateAccessForm" method="post" action="accessUpdate.doupdateaccess">
+                <input type="hidden" name="doc_id" id="update_access_doc_id">
+                <label for="update_username">Username:</label>
+                <input type="text" name="username" id="update_username">
+                <label for="update_accesslvl">New Access Level:</label>
+                <select name="accesslvl" id="update_accesslvl">
+                    <option value="r">Read</option>
+                    <option value="r+w">Read and Write</option>
+                </select>
+                <button type="submit">Update Access</button>
+            </form>
+        </div>
     </div>
-</div>
-<div id="accessModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Give Access</h2>
-        <form id="accessForm" method="post" action="giveAccess.do">
-            <input type="hidden" name="doc_id" id="access_doc_id">
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username">
-            <label for="accesslvl">Access Level:</label>
-            <select name="accesslvl" id="accesslvl">
-                <option value="r">Read</option>
-                <option value="r+w">Read and Write</option>
-               </select>
-               <button type="submit">Grant access</button>
-               </form>
-               </div>
-               </div>
- <script>
-$(document).ready(function() {
-    $(".delete-btn").click(function() {
-        var doc_id = $(this).attr('id');
-        var url = 'deleteFile.do?doc_id=' + doc_id;
-        window.location.href = url;
-    });
 
-    $(".download-btn").click(function() {
-        var doc_id = $(this).attr('id');
-        var url = 'downloadFile.do?doc_id=' + doc_id;
-        window.location.href = url;
-    });
+    <script>
+        $(document).ready(function() {
+            $(".delete-btn").click(function() {
+                var doc_id = $(this).attr('id');
+                var url = 'deleteFile.do?doc_id=' + doc_id;
+                window.location.href = url;
+            });
 
-    $(".update-btn").click(function() {
-        var doc_id = $(this).data('id');
-        var doc_title = $(this).data('title');
-        var doc_desc = $(this).data('desc');
+            $(".download-btn").click(function() {
+                var doc_id = $(this).attr('id');
+                var url = 'downloadFile.do?doc_id=' + doc_id;
+                window.location.href = url;
+            });
 
-        $("#doc_id").val(doc_id);
-        $("#doc_title").val(doc_title);
-        $("#doc_desc").val(doc_desc);
+            $(".update-btn").click(function() {
+                var doc_id = $(this).data('id');
+                var doc_title = $(this).data('title');
+                var doc_desc = $(this).data('desc');
 
-        $("#updateModal").css("display", "block");
-    });
+                $("#doc_id").val(doc_id);
+                $("#doc_title").val(doc_title);
+                $("#doc_desc").val(doc_desc);
 
-    $(".access-btn").click(function() {
-        var doc_id = $(this).data('id');
-        $("#access_doc_id").val(doc_id);
-        $("#accessModal").css("display", "block");
-    });
+                $("#updateModal").css("display", "block");
+            });
 
-    $(".close").click(function() {
-        $("#updateModal").css("display", "none");
-        $("#accessModal").css("display", "none");
-    });
+            $(".access-btn").click(function() {
+                var doc_id = $(this).data('id');
+                $("#access_doc_id").val(doc_id);
+                $("#remove_doc_id").val(doc_id);
+                $("#update_access_doc_id").val(doc_id);
+                $("#accessModal").css("display", "block");
+            });
 
-    $(window).click(function(event) {
-        if (event.target.id == "updateModal") {
-            $("#updateModal").css("display", "none");
-        }
-        if (event.target.id == "accessModal") {
-            $("#accessModal").css("display", "none");
-        }
-    });
-});
-</script>
+            $(".close").click(function() {
+                $("#updateModal").css("display", "none");
+                $("#accessModal").css("display", "none");
+            });
+
+            $(window).click(function(event) {
+                if (event.target.id == "updateModal") {
+                    $("#updateModal").css("display", "none");
+                }
+                if (event.target.id == "accessModal") {
+                    $("#accessModal").css("display", "none");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
