@@ -28,7 +28,8 @@ public abstract class Action {
 		
 		for (Document d :userDocs) {
 			userDocsOwners.add(facade.getDocOwner(d.getId()));
-			userPermissions.add(facade.getAccess( d.getId(),user.getId()));
+			System.out.println(facade.getAccess(d.getId() ,user.getId()));
+			userPermissions.add(facade.getAccess( d.getId() ,user.getId()));
 		}
 
 		req.setAttribute("userDocsOwners", userDocsOwners);

@@ -22,8 +22,8 @@ public class BusinessFacade {
 		public Boolean checkAccess(int userId,int docId) {
 			return accessbs.checkAccess(userId, docId);
 		}
-		public Access getAccess(int userId,int docId) {
-			return accessbs.getAccess(userId, docId);
+		public Access getAccess(int docId,int userId) {
+			return accessbs.getAccess(docId, userId);
 		}
 		public void removeAccess(int userId,int docId) {
 			accessbs.removeAccess(docId, userId);

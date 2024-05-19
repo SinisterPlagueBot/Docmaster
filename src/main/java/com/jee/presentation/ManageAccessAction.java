@@ -35,13 +35,16 @@ public class ManageAccessAction extends Action {
 			facade.addUserAccess(new_access);
 		}
 		else if (req.getRequestURI().contains("remove")) {
-			Access access =facade.getAccess(new_user.getId(), Integer.parseInt(doc_id));
-			facade.removeAccess(access.getId_user(), access.getId_doc());
+			System.out.println(new_user +"doc id "+doc_id);
+			Access access =facade.getAccess(Integer.parseInt(doc_id), new_user.getId());
+			System.out.println("remove access" +access);
+			facade.removeAccess(access.getId_doc(), access.getId_user());
 			
 		}
 		else if (req.getRequestURI().contains("update")) {
-			Access access =facade.getAccess(new_user.getId(), Integer.parseInt(doc_id));
+			Access access =facade.getAccess(Integer.parseInt(doc_id),new_user.getId() );
 			access.setAccesslvl(accesslvl);
+			System.out.println("updated access :"+access);
 			facade.updateAccess(access);
 		}
 		
